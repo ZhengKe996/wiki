@@ -1,11 +1,11 @@
-package fun.timu.wiki.response;
+package fun.timu.wiki.common.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Common<T> {
+public class BaseResponse<T> {
     /**
      * 业务上的成功或失败
      */

@@ -2,12 +2,16 @@ package fun.timu.wiki.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import fun.timu.wiki.common.response.EbookResponse;
 import fun.timu.wiki.entity.Ebook;
 import fun.timu.wiki.mapper.EbookMapper;
+import fun.timu.wiki.common.request.EbookVO;
 import fun.timu.wiki.service.EbookService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,16 +20,24 @@ import java.util.List;
  * @createDate 2023-07-03 19:30:52
  */
 @Service
-public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook>
-        implements EbookService {
+public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements EbookService {
     @Autowired
     private EbookMapper ebookMapper;
 
-    public List<Ebook> list(String name) {
+    public List<EbookResponse> list(EbookVO ebook) {
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("name", name);
+        queryWrapper.like("name", ebook.getName());
+        List<Ebook> ebookList = list(queryWrapper);
 
-        return list(queryWrapper);
+        List<EbookResponse> responses = new ArrayList<>();
+
+        for (Ebook source : ebookList) {
+            EbookResponse response = new EbookResponse();
+            BeanUtils.copyProperties(source, response);
+            responses.add(response);
+        }
+
+        return responses;
     }
 
 }

@@ -1,8 +1,9 @@
 package fun.timu.wiki.controller;
 
+import fun.timu.wiki.common.response.EbookResponse;
 import fun.timu.wiki.entity.Ebook;
-import fun.timu.wiki.mapper.EbookMapper;
-import fun.timu.wiki.response.Common;
+import fun.timu.wiki.common.request.EbookVO;
+import fun.timu.wiki.common.response.BaseResponse;
 import fun.timu.wiki.service.EbookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,9 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
-    public Common list(String name) {
-        Common<List<Ebook>> result = new Common<>();
-        List<Ebook> list = ebookService.list(name);
+    public BaseResponse list(EbookVO ebook) {
+        BaseResponse<List<EbookResponse>> result = new BaseResponse<>();
+        List<EbookResponse> list = ebookService.list(ebook);
         result.setData(list);
 
         return result;
