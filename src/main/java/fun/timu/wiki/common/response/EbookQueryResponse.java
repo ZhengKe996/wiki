@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EbookResponse {
+public class EbookQueryResponse {
     private String name;
 
     private Long category1Id;

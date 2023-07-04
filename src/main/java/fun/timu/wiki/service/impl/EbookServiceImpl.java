@@ -4,15 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import fun.timu.wiki.common.response.EbookResponse;
+import fun.timu.wiki.common.request.ebook.EbookSaveVO;
+import fun.timu.wiki.common.response.EbookQueryResponse;
 import fun.timu.wiki.common.response.PageResponse;
 import fun.timu.wiki.common.utils.CopyUtil;
 import fun.timu.wiki.entity.Ebook;
 import fun.timu.wiki.mapper.EbookMapper;
-import fun.timu.wiki.common.request.EbookVO;
+import fun.timu.wiki.common.request.ebook.EbookQueryVO;
 import fun.timu.wiki.service.EbookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     @Autowired
     private EbookMapper ebookMapper;
 
-    public PageResponse<EbookResponse> list(EbookVO ebook) {
+    public PageResponse<EbookQueryResponse> list(EbookQueryVO ebook) {
         PageHelper.startPage(ebook.getPage(), ebook.getSize());
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(ebook.getName() != null, "name", ebook.getName());
@@ -34,12 +36,30 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
 
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
 
-        List<EbookResponse> list = CopyUtil.copyList(ebookList, EbookResponse.class);
+        List<EbookQueryResponse> list = CopyUtil.copyList(ebookList, EbookQueryResponse.class);
 
-        PageResponse<EbookResponse> response = new PageResponse<>();
+        PageResponse<EbookQueryResponse> response = new PageResponse<>();
         response.setTotal(pageInfo.getTotal());
         response.setList(list);
         return response;
+    }
+
+    /**
+     * 新增/更新
+     * 若存在ID则为更新，否则为新增
+     *
+     * @param ebook
+     * @return
+     */
+    public boolean save(EbookSaveVO ebook) {
+        Ebook copy = CopyUtil.copy(ebook, Ebook.class);
+
+        if (ObjectUtils.isEmpty(ebook.getId())) {
+            ebookMapper.insert(copy);
+        } else {
+            ebookMapper.updateById(copy);
+        }
+        return true;
     }
 }
 
