@@ -22,9 +22,4 @@
         category2_id,description,cover,
         doc_count,view_count,vote_count
     </sql>
-
-    <select id="list" resultType="fun.timu.wiki.entity.Ebook">
-        select *
-        from `ebook`
-    </select>
 </mapper>

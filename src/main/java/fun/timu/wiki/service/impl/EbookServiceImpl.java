@@ -2,6 +2,7 @@ package fun.timu.wiki.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
 import fun.timu.wiki.common.response.EbookResponse;
 import fun.timu.wiki.common.utils.CopyUtil;
 import fun.timu.wiki.entity.Ebook;
@@ -26,9 +27,11 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     private EbookMapper ebookMapper;
 
     public List<EbookResponse> list(EbookVO ebook) {
+        PageHelper.startPage(1, 2);
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("name", ebook.getName());
-        List<Ebook> ebookList = list(queryWrapper);
+        System.out.println(ebook.getName());
+        queryWrapper.like(ebook.getName() != null, "name", ebook.getName());
+        List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);
         return CopyUtil.copyList(ebookList, EbookResponse.class);
     }
 }
