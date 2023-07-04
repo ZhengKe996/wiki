@@ -33,6 +33,9 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         PageHelper.startPage(ebook.getPage(), ebook.getSize());
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(ebook.getName() != null, "name", ebook.getName());
+
+        queryWrapper.eq(ebook.getCategoryId2() != null, "category2_id", ebook.getCategoryId2());
+
         List<Ebook> ebookList = ebookMapper.selectList(queryWrapper);
 
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);

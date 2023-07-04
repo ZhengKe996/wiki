@@ -11,6 +11,6 @@ import java.io.Serializable;
 public class EbookQueryVO extends PageRequest implements Serializable {
 
     private Long id;
-
+    private Long categoryId2;
     private String name;
 }
