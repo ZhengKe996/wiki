@@ -22,6 +22,7 @@ public class EbookController {
         BaseResponse<PageResponse<EbookQueryResponse>> result = new BaseResponse<>();
         PageResponse<EbookQueryResponse> list = ebookService.list(ebook);
         result.setData(list);
+        result.setMessage("查询成功");
         return result;
     }
 
