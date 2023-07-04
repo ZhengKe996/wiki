@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class EbookVO implements Serializable {
+public class EbookVO extends PageRequest implements Serializable {
 
     private Long id;
 

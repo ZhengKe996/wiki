@@ -1,6 +1,7 @@
 package fun.timu.wiki.controller;
 
 import fun.timu.wiki.common.response.EbookResponse;
+import fun.timu.wiki.common.response.PageResponse;
 import fun.timu.wiki.entity.Ebook;
 import fun.timu.wiki.common.request.EbookVO;
 import fun.timu.wiki.common.response.BaseResponse;
@@ -20,10 +21,9 @@ public class EbookController {
 
     @GetMapping("/list")
     public BaseResponse list(EbookVO ebook) {
-        BaseResponse<List<EbookResponse>> result = new BaseResponse<>();
-        List<EbookResponse> list = ebookService.list(ebook);
+        BaseResponse<PageResponse<EbookResponse>> result = new BaseResponse<>();
+        PageResponse<EbookResponse> list = ebookService.list(ebook);
         result.setData(list);
-
         return result;
     }
 }
