@@ -1,42 +1,44 @@
 package fun.timu.wiki.controller;
 
-import fun.timu.wiki.common.request.ebook.EbookSaveVO;
-import fun.timu.wiki.common.response.EbookQueryResponse;
-import fun.timu.wiki.common.response.PageResponse;
-import fun.timu.wiki.common.request.ebook.EbookQueryVO;
+import fun.timu.wiki.common.request.category.CategoryQueryVO;
+import fun.timu.wiki.common.request.category.CategorySaveVO;
 import fun.timu.wiki.common.response.BaseResponse;
-import fun.timu.wiki.service.EbookService;
+import fun.timu.wiki.common.response.CategoryQueryResponse;
+import fun.timu.wiki.common.response.PageResponse;
+import fun.timu.wiki.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
-@RequestMapping("/ebook")
-public class EbookController {
+@RequestMapping("/category")
+public class CategoryController {
+
     @Autowired
-    private EbookService ebookService;
+    private CategoryService categoryService;
 
     @GetMapping("/list")
-    public BaseResponse list(@Valid EbookQueryVO ebook) {
-        BaseResponse<PageResponse<EbookQueryResponse>> result = new BaseResponse<>();
-        PageResponse<EbookQueryResponse> list = ebookService.list(ebook);
+    public BaseResponse list(@Valid CategoryQueryVO category) {
+        BaseResponse<PageResponse<CategoryQueryResponse>> result = new BaseResponse<>();
+        PageResponse<CategoryQueryResponse> list = categoryService.list(category);
         result.setData(list);
         return result;
     }
 
+
+
     @PostMapping("/save")
-    public BaseResponse save(@RequestBody EbookSaveVO ebook) {
+    public BaseResponse save(@RequestBody CategorySaveVO category) {
         BaseResponse result = new BaseResponse<>();
-        ebookService.save(ebook);
+
         result.setMessage("新增成功");
         return result;
     }
 
     @PatchMapping("/update")
-    public BaseResponse update(@RequestBody EbookSaveVO ebook) {
+    public BaseResponse update(@RequestBody CategorySaveVO category) {
         BaseResponse result = new BaseResponse<>();
-        ebookService.save(ebook);
+
         result.setMessage("更新成功");
         return result;
     }
@@ -44,7 +46,7 @@ public class EbookController {
     @DeleteMapping("/delete/{id}")
     public BaseResponse delete(@PathVariable Long id) {
         BaseResponse result = new BaseResponse<>();
-        ebookService.delete(id);
+
         result.setMessage("删除成功");
         return result;
     }

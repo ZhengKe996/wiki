@@ -28,6 +28,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
     @Autowired
     private EbookMapper ebookMapper;
 
+    @Override
     public PageResponse<EbookQueryResponse> list(EbookQueryVO ebook) {
         PageHelper.startPage(ebook.getPage(), ebook.getSize());
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
@@ -51,6 +52,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
      * @param ebook
      * @return
      */
+    @Override
     public void save(EbookSaveVO ebook) {
         Ebook copy = CopyUtil.copy(ebook, Ebook.class);
 
@@ -61,6 +63,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         }
     }
 
+    @Override
     public void delete(Long id) {
         ebookMapper.deleteById(id);
     }
