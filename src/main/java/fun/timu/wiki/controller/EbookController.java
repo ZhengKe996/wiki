@@ -6,6 +6,7 @@ import fun.timu.wiki.common.response.PageResponse;
 import fun.timu.wiki.common.request.ebook.EbookQueryVO;
 import fun.timu.wiki.common.response.BaseResponse;
 import fun.timu.wiki.service.EbookService;
+import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
-    public BaseResponse list(EbookQueryVO ebook) {
+    public BaseResponse list(@Valid EbookQueryVO ebook) {
         BaseResponse<PageResponse<EbookQueryResponse>> result = new BaseResponse<>();
         PageResponse<EbookQueryResponse> list = ebookService.list(ebook);
         result.setData(list);
