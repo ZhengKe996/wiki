@@ -6,6 +6,7 @@ import fun.timu.wiki.common.response.PageResponse;
 import fun.timu.wiki.common.request.ebook.EbookQueryVO;
 import fun.timu.wiki.common.response.BaseResponse;
 import fun.timu.wiki.service.EbookService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,16 @@ public class EbookController {
     @PostMapping("/save")
     public BaseResponse save(@RequestBody EbookSaveVO ebook) {
         BaseResponse result = new BaseResponse<>();
-        boolean save = ebookService.save(ebook);
+        ebookService.save(ebook);
+        result.setMessage("新增成功");
+        return result;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public BaseResponse delete(@PathVariable Long id) {
+        BaseResponse result = new BaseResponse<>();
+        ebookService.delete(id);
+        result.setMessage("删除成功");
         return result;
     }
 }

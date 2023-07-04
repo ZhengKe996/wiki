@@ -51,7 +51,7 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
      * @param ebook
      * @return
      */
-    public boolean save(EbookSaveVO ebook) {
+    public void save(EbookSaveVO ebook) {
         Ebook copy = CopyUtil.copy(ebook, Ebook.class);
 
         if (ObjectUtils.isEmpty(ebook.getId())) {
@@ -59,7 +59,10 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         } else {
             ebookMapper.updateById(copy);
         }
-        return true;
+    }
+
+    public void delete(Long id) {
+        ebookMapper.deleteById(id);
     }
 }
 

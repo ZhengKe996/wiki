@@ -15,5 +15,7 @@ import fun.timu.wiki.common.request.ebook.EbookQueryVO;
 public interface EbookService extends IService<Ebook> {
     public PageResponse<EbookQueryResponse> list(EbookQueryVO ebook);
 
-    public boolean save(EbookSaveVO ebook);
+    public void save(EbookSaveVO ebook);
+
+    public void delete(Long id);
 }
