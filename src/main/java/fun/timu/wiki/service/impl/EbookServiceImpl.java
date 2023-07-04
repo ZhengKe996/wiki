@@ -3,6 +3,7 @@ package fun.timu.wiki.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import fun.timu.wiki.common.response.EbookResponse;
+import fun.timu.wiki.common.utils.CopyUtil;
 import fun.timu.wiki.entity.Ebook;
 import fun.timu.wiki.mapper.EbookMapper;
 import fun.timu.wiki.common.request.EbookVO;
@@ -28,18 +29,8 @@ public class EbookServiceImpl extends ServiceImpl<EbookMapper, Ebook> implements
         QueryWrapper<Ebook> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("name", ebook.getName());
         List<Ebook> ebookList = list(queryWrapper);
-
-        List<EbookResponse> responses = new ArrayList<>();
-
-        for (Ebook source : ebookList) {
-            EbookResponse response = new EbookResponse();
-            BeanUtils.copyProperties(source, response);
-            responses.add(response);
-        }
-
-        return responses;
+        return CopyUtil.copyList(ebookList, EbookResponse.class);
     }
-
 }
 
 
