@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -25,6 +27,14 @@ public class CategoryController {
         return result;
     }
 
+
+    @GetMapping("/all")
+    public BaseResponse all() {
+        BaseResponse<List<CategoryQueryResponse>> result = new BaseResponse<>();
+        List<CategoryQueryResponse> list = categoryService.all();
+        result.setData(list);
+        return result;
+    }
 
 
     @PostMapping("/save")

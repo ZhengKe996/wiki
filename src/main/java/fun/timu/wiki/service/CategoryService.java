@@ -7,13 +7,17 @@ import fun.timu.wiki.common.response.CategoryQueryResponse;
 import fun.timu.wiki.common.response.PageResponse;
 import fun.timu.wiki.entity.Category;
 
+import java.util.List;
+
 /**
-* @author zhengke
-* @description 针对表【category(分类)】的数据库操作Service
-* @createDate 2023-07-04 17:24:32
-*/
+ * @author zhengke
+ * @description 针对表【category(分类)】的数据库操作Service
+ * @createDate 2023-07-04 17:24:32
+ */
 public interface CategoryService extends IService<Category> {
     public PageResponse<CategoryQueryResponse> list(CategoryQueryVO category);
+
+    public List<CategoryQueryResponse> all();
 
     public void save(CategorySaveVO category);
 

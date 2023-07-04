@@ -34,17 +34,26 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         PageHelper.startPage(category.getPage(), category.getSize());
         QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("sort");
-        List<Category> categories = categoryMapper.selectList(queryWrapper);
+        List<Category> categoryList = categoryMapper.selectList(queryWrapper);
 
-        PageInfo<Category> info = new PageInfo<>(categories);
+        PageInfo<Category> info = new PageInfo<>(categoryList);
 
-        List<CategoryQueryResponse> list = CopyUtil.copyList(categories, CategoryQueryResponse.class);
+        List<CategoryQueryResponse> list = CopyUtil.copyList(categoryList, CategoryQueryResponse.class);
 
         PageResponse<CategoryQueryResponse> response = new PageResponse<>();
         response.setTotal(info.getTotal());
         response.setList(list);
 
         return response;
+    }
+
+    @Override
+    public List<CategoryQueryResponse> all() {
+        QueryWrapper<Category> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sort");
+        List<Category> categoryList = categoryMapper.selectList(queryWrapper);
+        List<CategoryQueryResponse> list = CopyUtil.copyList(categoryList, CategoryQueryResponse.class);
+        return list;
     }
 
     @Override
