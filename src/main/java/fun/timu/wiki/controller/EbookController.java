@@ -28,8 +28,17 @@ public class EbookController {
     @PostMapping("/save")
     public BaseResponse save(@RequestBody EbookSaveVO ebook) {
         BaseResponse result = new BaseResponse<>();
+        System.out.println(ebook.toString());
         ebookService.save(ebook);
         result.setMessage("新增成功");
+        return result;
+    }
+
+    @PatchMapping("/update")
+    public BaseResponse update(@RequestBody EbookSaveVO ebook) {
+        BaseResponse result = new BaseResponse<>();
+        ebookService.save(ebook);
+        result.setMessage("更新成功");
         return result;
     }
 
