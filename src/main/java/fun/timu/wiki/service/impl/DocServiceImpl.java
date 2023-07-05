@@ -71,6 +71,11 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc>
     public void delete(Long id) {
         docMapper.deleteById(id);
     }
+
+    @Override
+    public void delete(List<String> ids) {
+        docMapper.deleteBatchIds(ids);
+    }
 }
 
 

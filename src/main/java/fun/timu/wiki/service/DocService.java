@@ -22,4 +22,6 @@ public interface DocService extends IService<Doc> {
     public void save(DocSaveVO doc);
 
     public void delete(Long id);
+
+    public void delete(List<String> ids);
 }

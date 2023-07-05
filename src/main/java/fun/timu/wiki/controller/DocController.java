@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -53,10 +54,11 @@ public class DocController {
         return result;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public BaseResponse delete(@PathVariable Long id) {
+    @DeleteMapping("/delete/{ids}")
+    public BaseResponse delete(@PathVariable String ids) {
         BaseResponse result = new BaseResponse<>();
-        docService.delete(id);
+        List<String> list = Arrays.asList(ids.split(","));
+        docService.delete(list);
         result.setMessage("删除成功");
         return result;
     }
