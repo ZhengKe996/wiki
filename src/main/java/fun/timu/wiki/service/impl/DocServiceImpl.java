@@ -71,16 +71,6 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         return list;
     }
 
-    @Override
-    public String findContentById(Long id) {
-        Content content = contentMapper.selectById(id);
-
-        if (ObjectUtils.isEmpty(content)) {
-            return "";
-        } else {
-            return content.getContent();
-        }
-    }
 
     @Override
     public void save(DocSaveVO doc) {
@@ -105,6 +95,22 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     @Override
     public void delete(List<String> ids) {
         docMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    public String findContentById(Long id) {
+        Content content = contentMapper.selectById(id);
+        docMapper.increaseViewCount(id);
+        if (ObjectUtils.isEmpty(content)) {
+            return "";
+        } else {
+            return content.getContent();
+        }
+    }
+
+    @Override
+    public void vote(Long id) {
+        docMapper.increaseVoteCount(id);
     }
 }
 

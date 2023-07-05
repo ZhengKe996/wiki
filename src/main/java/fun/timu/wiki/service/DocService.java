@@ -21,11 +21,13 @@ public interface DocService extends IService<Doc> {
 
     public List<DocQueryResponse> all(Long id);
 
-    public String findContentById(Long id);
-
     public void save(DocSaveVO doc);
 
     public void delete(Long id);
 
     public void delete(List<String> ids);
+
+    public String findContentById(Long id);
+    public void vote(Long id);
+
 }

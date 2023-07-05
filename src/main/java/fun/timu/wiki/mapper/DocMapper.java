@@ -3,6 +3,7 @@ package fun.timu.wiki.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import fun.timu.wiki.entity.Doc;
 import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author zhengke
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface DocMapper extends BaseMapper<Doc> {
+    public void increaseViewCount(@Param("id") Long id);
+
+    public void increaseVoteCount(@Param("id") Long id);
 
 }
 

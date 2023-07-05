@@ -37,15 +37,6 @@ public class DocController {
         return result;
     }
 
-    @GetMapping("/find-content/{id}")
-    public BaseResponse findContent(@PathVariable Long id) {
-        BaseResponse<String> result = new BaseResponse<>();
-        String content = docService.findContentById(id);
-        result.setData(content);
-        return result;
-    }
-
-
     @PostMapping("/save")
     public BaseResponse save(@Valid @RequestBody DocSaveVO doc) {
         BaseResponse result = new BaseResponse<>();
@@ -68,6 +59,23 @@ public class DocController {
         List<String> list = Arrays.asList(ids.split(","));
         docService.delete(list);
         result.setMessage("删除成功");
+        return result;
+    }
+
+    @GetMapping("/find-content/{id}")
+    public BaseResponse findContent(@PathVariable Long id) {
+        BaseResponse<String> result = new BaseResponse<>();
+        String content = docService.findContentById(id);
+        result.setData(content);
+        result.setMessage("成功");
+        return result;
+    }
+
+    @GetMapping("/vote/{id}")
+    public BaseResponse vote(@PathVariable Long id) {
+        BaseResponse result = new BaseResponse<>();
+        docService.vote(id);
+        result.setMessage("成功");
         return result;
     }
 }
