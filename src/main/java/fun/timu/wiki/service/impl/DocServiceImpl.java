@@ -9,7 +9,9 @@ import fun.timu.wiki.common.request.doc.DocSaveVO;
 import fun.timu.wiki.common.response.DocQueryResponse;
 import fun.timu.wiki.common.response.PageResponse;
 import fun.timu.wiki.common.utils.CopyUtil;
+import fun.timu.wiki.entity.Content;
 import fun.timu.wiki.entity.Doc;
+import fun.timu.wiki.mapper.ContentMapper;
 import fun.timu.wiki.mapper.DocMapper;
 import fun.timu.wiki.service.DocService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,12 @@ import java.util.List;
  * @createDate 2023-07-04 19:24:00
  */
 @Service
-public class DocServiceImpl extends ServiceImpl<DocMapper, Doc>
-        implements DocService {
+public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocService {
     @Autowired
     private DocMapper docMapper;
+
+    @Autowired
+    private ContentMapper contentMapper;
 
     @Override
     public PageResponse<DocQueryResponse> list(DocQueryVO doc) {
@@ -59,11 +63,15 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc>
     @Override
     public void save(DocSaveVO doc) {
         Doc copy = CopyUtil.copy(doc, Doc.class);
+        Content content = CopyUtil.copy(doc, Content.class);
 
         if (ObjectUtils.isEmpty(doc.getId())) {
             docMapper.insert(copy);
+            content.setId(copy.getId());
+            contentMapper.insert(content);
         } else {
             docMapper.updateById(copy);
+            contentMapper.updateById(content);
         }
     }
 

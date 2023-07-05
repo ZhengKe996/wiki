@@ -47,7 +47,7 @@ public class DocController {
     }
 
     @PatchMapping("/update")
-    public BaseResponse update(@RequestBody DocSaveVO doc) {
+    public BaseResponse update(@Valid @RequestBody DocSaveVO doc) {
         BaseResponse result = new BaseResponse<>();
         docService.save(doc);
         result.setMessage("更新成功");

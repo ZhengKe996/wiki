@@ -1,13 +1,12 @@
 package fun.timu.wiki.common.request.doc;
 
-import fun.timu.wiki.common.request.PageRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DocSaveVO extends PageRequest {
+public class DocSaveVO {
     private Long id;
 
     @NotNull(message = "【电子书】不能为空")
