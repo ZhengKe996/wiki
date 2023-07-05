@@ -64,9 +64,25 @@ create table `doc`
 ) engine = innodb
   default charset = utf8mb4 comment ="文档";
 
-insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count) values (1, 1, 0, '文档1', 1, 0, 0);
-insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count) values (2, 1, 1, '文档1.1', 1, 0, 0);
-insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count) values (3, 1, 0, '文档2', 2, 0, 0);
-insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count) values (4, 1, 3, '文档2.1', 1, 0, 0);
-insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count) values (5, 1, 3, '文档2.2', 2, 0, 0);
-insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count) values (6, 1, 5, '文档2.2.1', 1, 0, 0);
+insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count)
+values (1, 1, 0, '文档1', 1, 0, 0);
+insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count)
+values (2, 1, 1, '文档1.1', 1, 0, 0);
+insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count)
+values (3, 1, 0, '文档2', 2, 0, 0);
+insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count)
+values (4, 1, 3, '文档2.1', 1, 0, 0);
+insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count)
+values (5, 1, 3, '文档2.2', 2, 0, 0);
+insert into `doc`(id, ebook_id, parent, name, sort, view_count, vote_count)
+values (6, 1, 5, '文档2.2.1', 1, 0, 0);
+
+
+CREATE TABLE `content`
+(
+    `id`      bigint     NOT NULL COMMENT '文档ID',
+    `content` mediumtext NOT NULL COMMENT '内容',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci COMMENT ='文档内容';
