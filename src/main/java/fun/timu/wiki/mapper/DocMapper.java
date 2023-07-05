@@ -13,10 +13,11 @@ import org.apache.ibatis.annotations.Param;
  */
 @Repository
 public interface DocMapper extends BaseMapper<Doc> {
-    public void increaseViewCount(@Param("id") Long id);
+    void increaseViewCount(@Param("id") Long id);
 
-    public void increaseVoteCount(@Param("id") Long id);
+    void increaseVoteCount(@Param("id") Long id);
 
+    void updateEbookInfo();
 }
 
 

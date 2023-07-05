@@ -86,6 +86,8 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         Content content = CopyUtil.copy(doc, Content.class);
 
         if (ObjectUtils.isEmpty(doc.getId())) {
+            doc.setViewCount(0);
+            doc.setVoteCount(0);
             docMapper.insert(copy);
             content.setId(copy.getId());
             contentMapper.insert(content);
@@ -124,6 +126,11 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         } else {
             throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
         }
+    }
+
+    @Override
+    public void updateEbookInfo() {
+        docMapper.updateEbookInfo();
     }
 }
 

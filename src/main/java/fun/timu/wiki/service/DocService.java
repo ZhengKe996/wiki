@@ -28,6 +28,9 @@ public interface DocService extends IService<Doc> {
     public void delete(List<String> ids);
 
     public String findContentById(Long id);
+
     public void vote(Long id);
+
+    public void updateEbookInfo();
 
 }
