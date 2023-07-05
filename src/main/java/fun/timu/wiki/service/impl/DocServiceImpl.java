@@ -4,16 +4,21 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import fun.timu.wiki.common.exception.BusinessException;
+import fun.timu.wiki.common.exception.BusinessExceptionCode;
 import fun.timu.wiki.common.request.doc.DocQueryVO;
 import fun.timu.wiki.common.request.doc.DocSaveVO;
 import fun.timu.wiki.common.response.DocQueryResponse;
 import fun.timu.wiki.common.response.PageResponse;
 import fun.timu.wiki.common.utils.CopyUtil;
+import fun.timu.wiki.common.utils.RedisUtil;
+import fun.timu.wiki.common.utils.RequestContext;
 import fun.timu.wiki.entity.Content;
 import fun.timu.wiki.entity.Doc;
 import fun.timu.wiki.mapper.ContentMapper;
 import fun.timu.wiki.mapper.DocMapper;
 import fun.timu.wiki.service.DocService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -32,6 +37,9 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Autowired
     private ContentMapper contentMapper;
+
+    @Resource
+    public RedisUtil redisUtil;
 
     @Override
     public PageResponse<DocQueryResponse> list(DocQueryVO doc) {
@@ -110,7 +118,12 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
 
     @Override
     public void vote(Long id) {
-        docMapper.increaseVoteCount(id);
+        String ip = RequestContext.getRemoteAddr();
+        if (redisUtil.validateRepeat("DOC_VOTE_" + id + "_" + ip, 5000)) {
+            docMapper.increaseVoteCount(id);
+        } else {
+            throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
+        }
     }
 }
 
