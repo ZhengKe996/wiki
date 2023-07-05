@@ -19,6 +19,8 @@ public interface DocService extends IService<Doc> {
 
     public List<DocQueryResponse> all();
 
+    public String findContentById(Long id);
+
     public void save(DocSaveVO doc);
 
     public void delete(Long id);

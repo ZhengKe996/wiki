@@ -61,6 +61,17 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     @Override
+    public String findContentById(Long id) {
+        Content content = contentMapper.selectById(id);
+
+        if (ObjectUtils.isEmpty(content)) {
+            return "";
+        } else {
+            return content.getContent();
+        }
+    }
+
+    @Override
     public void save(DocSaveVO doc) {
         Doc copy = CopyUtil.copy(doc, Doc.class);
         Content content = CopyUtil.copy(doc, Content.class);

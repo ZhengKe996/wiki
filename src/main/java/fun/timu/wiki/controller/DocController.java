@@ -37,6 +37,14 @@ public class DocController {
         return result;
     }
 
+    @GetMapping("/find-content/${id}")
+    public BaseResponse findContent(@PathVariable Long id) {
+        BaseResponse<String> result = new BaseResponse<>();
+        String content = docService.findContentById(id);
+        result.setData(content);
+        return result;
+    }
+
 
     @PostMapping("/save")
     public BaseResponse save(@Valid @RequestBody DocSaveVO doc) {
