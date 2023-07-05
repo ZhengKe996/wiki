@@ -37,7 +37,7 @@ public class DocController {
         return result;
     }
 
-    @GetMapping("/find-content/${id}")
+    @GetMapping("/find-content/{id}")
     public BaseResponse findContent(@PathVariable Long id) {
         BaseResponse<String> result = new BaseResponse<>();
         String content = docService.findContentById(id);
