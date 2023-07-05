@@ -28,10 +28,10 @@ public class DocController {
         return result;
     }
 
-    @GetMapping("/all")
-    public BaseResponse all() {
+    @GetMapping("/all/{ebookId}")
+    public BaseResponse all(@PathVariable Long ebookId) {
         BaseResponse<List<DocQueryResponse>> result = new BaseResponse<>();
-        List<DocQueryResponse> list = docService.all();
+        List<DocQueryResponse> list = docService.all(ebookId);
         result.setData(list);
         result.setMessage("查询成功");
         return result;

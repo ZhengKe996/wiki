@@ -61,6 +61,17 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
     @Override
+    public List<DocQueryResponse> all(Long id) {
+        QueryWrapper<Doc> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sort");
+        queryWrapper.eq("ebook_id", id);
+
+        List<Doc> categoryList = docMapper.selectList(queryWrapper);
+        List<DocQueryResponse> list = CopyUtil.copyList(categoryList, DocQueryResponse.class);
+        return list;
+    }
+
+    @Override
     public String findContentById(Long id) {
         Content content = contentMapper.selectById(id);
 
