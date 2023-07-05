@@ -10,7 +10,7 @@ public class UserLoginResponse {
 
     private String loginName;
 
-    private String name;
+    private String nickname;
 
     private String token;
 }
