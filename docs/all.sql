@@ -86,3 +86,17 @@ CREATE TABLE `content`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci COMMENT ='文档内容';
+
+# 用户
+drop table if exists `user`;
+create table `user`
+(
+    `id`         bigint      not null comment "ID",
+    `login_name` varchar(50) not null comment "用户名",
+    `nickname`   varchar(50) comment "昵称",
+    `password`   char(32)    not null comment "昵称",
+    primary key (`id`),
+    unique key `login_name_unique` (`login_name`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci COMMENT ='用户';
