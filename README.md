@@ -1,4 +1,5 @@
 # Wiki 库
+![Image](docs/images/img.png)
 
 基于 SpringBoot3.x + Mybatis Plus3.5.x 开发的知识库项目(服务端完结)
 
