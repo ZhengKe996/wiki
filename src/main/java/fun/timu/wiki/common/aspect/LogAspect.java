@@ -18,7 +18,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -30,9 +29,12 @@ public class LogAspect {
 
     private final static Logger LOG = LoggerFactory.getLogger(LogAspect.class);
 
-    /** 定义一个切点 */
+    /**
+     * 定义一个切点
+     */
     @Pointcut("execution(public * fun.timu.*.controller..*Controller.*(..))")
-    public void controllerPointcut() {}
+    public void controllerPointcut() {
+    }
 
     @Resource
     private SnowFlake snowFlake;
@@ -40,8 +42,6 @@ public class LogAspect {
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
 
-        // 增加日志流水号
-        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
 
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -59,7 +59,7 @@ public class LogAspect {
         // 打印请求参数
         Object[] args = joinPoint.getArgs();
 
-        Object[] arguments  = new Object[args.length];
+        Object[] arguments = new Object[args.length];
         for (int i = 0; i < args.length; i++) {
             if (args[i] instanceof ServletRequest
                     || args[i] instanceof ServletResponse
@@ -92,6 +92,7 @@ public class LogAspect {
 
     /**
      * 使用nginx做反向代理，需要用该方法才能取到真实的远程IP
+     *
      * @param request
      * @return
      */
