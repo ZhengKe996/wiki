@@ -98,8 +98,24 @@ create table `user`
     primary key (`id`),
     unique key `login_name_unique` (`login_name`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci COMMENT ='用户';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='用户';
 
 
-update doc set view_count = view_count + 1 where id = 1;
+update doc
+set view_count = view_count + 1
+where id = 1;
+
+# 电子书快照表
+drop table if exists `ebook_snapshot`;
+create table `ebook_snapshot`
+(
+    `id`            bigint auto_increment not null comment "ID",
+    `ebook_id`      bigint                not null default 0 comment "电子书ID",
+    `data`          date                  not null comment "快照日期",
+    `view_count`    int                            default 0 comment "阅读数",
+    `vote_count`    int                            default 0 comment "点赞数",
+    `view_increase` int                            default 0 comment "阅读增长",
+    `vote_increase` int                            default 0 comment "点赞增长",
+    primary key (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='电子书快照表';
