@@ -1,6 +1,5 @@
 package fun.timu.wiki.job;
 
-import fun.timu.wiki.common.utils.SnowFlake;
 import fun.timu.wiki.service.EbookSnapshotService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +14,6 @@ public class EbookSnapshotJob {
     @Autowired
     private EbookSnapshotService ebookSnapshotService;
 
-    @Autowired
-    private SnowFlake snowFlake;
 
     /**
      * 自定义cron表达式跑批
