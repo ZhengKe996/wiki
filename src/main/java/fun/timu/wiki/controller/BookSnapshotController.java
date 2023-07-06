@@ -3,6 +3,7 @@ package fun.timu.wiki.controller;
 import fun.timu.wiki.common.response.BaseResponse;
 import fun.timu.wiki.common.response.StatisticResponse;
 import fun.timu.wiki.service.EbookSnapshotService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/ebook-snapshot")
 public class BookSnapshotController {
 
+    @Autowired
     private EbookSnapshotService ebookSnapshotService;
 
     @GetMapping("/get-statistic")
