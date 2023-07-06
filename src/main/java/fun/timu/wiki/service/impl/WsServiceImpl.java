@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 public class WsServiceImpl implements WsService {
     @Autowired
     public WebSocketServer webSocketServer;
-
     @Async
     public void sendInfo(String message) {
         webSocketServer.sendInfo(message);
