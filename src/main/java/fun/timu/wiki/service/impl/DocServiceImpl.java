@@ -21,6 +21,7 @@ import fun.timu.wiki.service.DocService;
 import fun.timu.wiki.service.WsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
@@ -84,6 +85,7 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     }
 
 
+    @Transactional
     @Override
     public void save(DocSaveVO doc) {
         Doc copy = CopyUtil.copy(doc, Doc.class);
