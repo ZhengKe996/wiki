@@ -1,14 +1,15 @@
 package fun.timu.wiki.websocket;
 
+import fun.timu.wiki.common.exception.BusinessException;
+import fun.timu.wiki.common.exception.BusinessExceptionCode;
+import fun.timu.wiki.common.utils.RedisUtil;
+import fun.timu.wiki.common.utils.SpringUtil;
 import jakarta.websocket.*;
-import jakarta.websocket.OnClose;
-import jakarta.websocket.OnError;
-import jakarta.websocket.OnMessage;
-import jakarta.websocket.OnOpen;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,6 +20,9 @@ import java.util.HashMap;
 public class WebSocketServer {
     private static final Logger LOG = LoggerFactory.getLogger(WebSocketServer.class);
 
+    @Autowired
+    private RedisUtil redisUtil = SpringUtil.getBean(RedisUtil.class);
+
     /**
      * 每个客户端一个token
      */
@@ -26,11 +30,22 @@ public class WebSocketServer {
 
     private static HashMap<String, Session> map = new HashMap<>();
 
+
     /**
      * 连接成功
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) {
+        if (token == null || token.isEmpty()) {
+            LOG.info("token为空，拦截请求");
+            throw new BusinessException(BusinessExceptionCode.TOKEN_ERROR);
+        }
+        Object object = redisUtil.getValue(token);
+        if (object == null) {
+            LOG.warn("无效Token，拦截请求");
+            throw new BusinessException(BusinessExceptionCode.TOKEN_ERROR);
+        }
+
         map.put(token, session);
         this.token = token;
         LOG.info("有新连接：token：{}，session id：{}，当前连接数：{}", token, session.getId(), map.size());

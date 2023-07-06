@@ -33,4 +33,14 @@ public class RedisUtil {
             return true;
         }
     }
+
+    /**
+     * 普通缓存获取
+     *
+     * @param key 键
+     * @return 值
+     */
+    public Object getValue(String key) {
+        return key == null ? null : redisTemplate.opsForValue().get(key);
+    }
 }
