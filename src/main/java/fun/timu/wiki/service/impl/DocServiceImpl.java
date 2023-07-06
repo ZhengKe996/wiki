@@ -18,7 +18,7 @@ import fun.timu.wiki.entity.Doc;
 import fun.timu.wiki.mapper.ContentMapper;
 import fun.timu.wiki.mapper.DocMapper;
 import fun.timu.wiki.service.DocService;
-import jakarta.annotation.Resource;
+import fun.timu.wiki.service.WsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -38,8 +38,12 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
     @Autowired
     private ContentMapper contentMapper;
 
-    @Resource
-    public RedisUtil redisUtil;
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private WsService wsService;
+
 
     @Override
     public PageResponse<DocQueryResponse> list(DocQueryVO doc) {
@@ -126,6 +130,10 @@ public class DocServiceImpl extends ServiceImpl<DocMapper, Doc> implements DocSe
         } else {
             throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
         }
+        Doc docDB = docMapper.selectById(id);
+
+        // WebSocket 推送信息
+        wsService.sendInfo("【" + docDB.getName() + "】被点赞！");
     }
 
     @Override
